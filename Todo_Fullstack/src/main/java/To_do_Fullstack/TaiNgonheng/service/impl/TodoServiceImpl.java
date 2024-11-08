@@ -58,7 +58,7 @@ public class TodoServiceImpl implements TodoService {
                 orElseThrow(()-> new ResourceNotFoundException("To do not found with Id"+id));
         todo.setTitle(todoDto.getTitle());
         todo.setDescription(todoDto.getDescription());
-        todo.setComplete(todoDto.isComplete());
+        todo.setCompleted(todoDto.isCompleted());
 
         Todo updateTodo = todoRepository.save(todo);
         return modelMapper.map(updateTodo, TodoDto.class);
@@ -74,7 +74,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto completeTodo(Long id) {
         Todo todo =todoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("To do with this ID are not found:"+id));
-        todo.setComplete(Boolean.TRUE);
+        todo.setCompleted(Boolean.TRUE);
         Todo updateTodo = todoRepository.save(todo);
         return modelMapper.map(updateTodo, TodoDto.class);
     }
@@ -82,7 +82,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public TodoDto inCompleteTodo(Long id) {
         Todo todo = todoRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Todo is not found "+id));
-        todo.setComplete(Boolean.FALSE);
+        todo.setCompleted(Boolean.FALSE);
         Todo updateTodo = todoRepository.save(todo);
 
         return modelMapper.map(updateTodo, TodoDto.class);

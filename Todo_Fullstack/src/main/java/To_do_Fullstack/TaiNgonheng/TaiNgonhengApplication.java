@@ -11,7 +11,6 @@ public class TaiNgonhengApplication {
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(TaiNgonhengApplication.class, args);
 	}
