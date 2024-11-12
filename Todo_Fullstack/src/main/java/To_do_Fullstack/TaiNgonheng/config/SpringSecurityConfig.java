@@ -1,6 +1,8 @@
 package To_do_Fullstack.TaiNgonheng.config;
 
 
+import To_do_Fullstack.TaiNgonheng.security.JwtAuthenticationEntryPoint;
+import To_do_Fullstack.TaiNgonheng.security.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 
 @Configuration
@@ -27,6 +30,8 @@ import org.springframework.stereotype.Service;
 public class SpringSecurityConfig {
 
     private UserDetailsService userDetailsService;
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private JwtAuthenticationFilter authenticationFilter;
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
@@ -46,26 +51,12 @@ public class SpringSecurityConfig {
             authorize.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll();
             authorize.anyRequest().authenticated();
         }).httpBasic(Customizer.withDefaults());
+        http.exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
+        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails pate = User.builder()
-//                .username("pate")
-//                .password(passwordEncoder().encode("pate"))
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(pate, admin);
-//    }
 }
