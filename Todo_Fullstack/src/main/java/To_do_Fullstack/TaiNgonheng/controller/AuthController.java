@@ -1,5 +1,6 @@
 package To_do_Fullstack.TaiNgonheng.controller;
 
+import To_do_Fullstack.TaiNgonheng.dto.JwtAuthResponse;
 import To_do_Fullstack.TaiNgonheng.dto.LoginDto;
 import To_do_Fullstack.TaiNgonheng.dto.RegisterDto;
 import To_do_Fullstack.TaiNgonheng.service.AuthService;
@@ -27,8 +28,8 @@ public class AuthController {
     // http://localhost:8080/api/auth/login
     // fill by LoginDto
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String response = authService.login(loginDto);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+        JwtAuthResponse jwtAuthResponse = authService.login(loginDto);
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
 }
