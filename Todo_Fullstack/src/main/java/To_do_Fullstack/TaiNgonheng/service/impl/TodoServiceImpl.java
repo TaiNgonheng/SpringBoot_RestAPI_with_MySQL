@@ -51,7 +51,6 @@ public class TodoServiceImpl implements TodoService {
        List<Todo> todos =todoRepository.findAll();
         return todos.stream().map((todo)-> modelMapper.map(todo, TodoDto.class)).collect(Collectors.toList());
     }
-
     @Override
     public TodoDto updateTodo(TodoDto todoDto, Long id) {
         Todo todo = todoRepository.findById(id).
@@ -84,7 +83,6 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = todoRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Todo is not found "+id));
         todo.setCompleted(Boolean.FALSE);
         Todo updateTodo = todoRepository.save(todo);
-
         return modelMapper.map(updateTodo, TodoDto.class);
     }
 }
