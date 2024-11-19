@@ -16,17 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private AuthService authService;
-    //Build register Rest api
-    //http://localhost:8080/api/auth/register
-    //follow RegisterDto
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    // login to user account
-    // http://localhost:8080/api/auth/login
-    // fill by LoginDto
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
         JwtAuthResponse jwtAuthResponse = authService.login(loginDto);
